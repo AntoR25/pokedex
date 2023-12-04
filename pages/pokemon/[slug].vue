@@ -18,6 +18,16 @@ const query = gql`
           }
         )
       }
+      typePokemon {
+      nom
+      id
+      image {
+        url
+      }
+      couleur {
+        hex
+      }
+    }
     }
   }
 `;
@@ -58,12 +68,18 @@ pokemon.value = data.value.pokemon;
       name="twitter:description"
       :content="`Découvrez des détails sur ${pokemon.nom}: ${pokemon.description}`"
     />
+    
     <Meta name="twitter:image" :content="pokemon.image.url" />
   </Head>
 
   <div v-if="pokemon" class="max-w-lg space-y-8 mx-auto">
     <NuxtImg class="" :src="pokemon.image.url" :alt="pokemon.nom" />
-    <h2 class="text-3xl text-center">{{ pokemon.nom }}</h2>
+    <h2 class="text-3xl text-center flex space x-4 items-center">
+      <div>
+        {{ pokemon.nom }}
+      </div>
+      <img class="h-10 w-10 mx-3" :src="pokemon.typePokemon.image.url" />
+    </h2>
     <p class="text-justify text-red-950 pb-10">{{ pokemon.description }}</p>
   </div>
   <div v-else>
